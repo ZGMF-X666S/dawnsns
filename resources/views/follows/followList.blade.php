@@ -5,7 +5,9 @@
 <div>
     @foreach ($follows as $follow)    
         <img src="/images/{{$follow->images}}">
+        
     @endforeach
+    
 </div>
 
 <div>
