@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use Auth;
 
 class UsersController extends Controller
 {
@@ -11,6 +13,13 @@ class UsersController extends Controller
         return view('users.profile');
     }
     public function search(){
-        return view('users.search');
+        $users = DB::table('users')
+        ->where('id','!=',Auth::id())
+        // ->select('images',)
+        ->get();
+        
+        // dd($users);
+
+    return view('users.search',['users'=>$users]);
     }
 }

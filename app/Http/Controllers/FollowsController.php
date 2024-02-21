@@ -34,7 +34,7 @@ class FollowsController extends Controller
         $posts = DB::table('posts')
             ->join('users','posts.user_id','=','users.id')
             ->join('follows','follows.follower','=','users.id')
-            ->where('follows.follower','=', Auth::id())
+            ->where('follows.follow','=', Auth::id())
             ->select('posts.created_at','posts','posts.user_id','users.username','follows.follower','images')
             ->get();
             // dd();

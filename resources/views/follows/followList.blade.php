@@ -13,6 +13,7 @@
 <div>
 
     @foreach ($posts as $post)
+        
         <img src="/images/{{$post->images}}" alt="{{$post->images}}">
         {{ $post->follow }}
         {{ $post->posts }}
