@@ -27,6 +27,7 @@ class UsersController extends Controller
                 ->where('id','!=',Auth::id())
                 // ->select('images',)
                 ->get();
+                // dd($users);
         }
        
         

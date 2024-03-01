@@ -1,7 +1,7 @@
 @extends('layouts.login')
 
 @section('content')
-{!! Form::open(['url' => 'search/create']) !!}
+{!! Form::open() !!}
     <div class="form-group">
         {!! Form::input('text', 'newSearch', null, ['required', 'class' => 'form-control', 'placeholder' => 'ユーザー名']) !!}
     </div>
@@ -22,11 +22,14 @@
         {{ $user->username }}
         {{ $user->created_at }}
 
-        {!! Form::open(['url' => '/followList']) !!}
+        {!! Form::open(['url' => '/add-follow']) !!}
+        {!! Form::hidden('id',$user->id)!!}
         {!! Form::submit('フォローする', ['class' => 'btn btn-primary']) !!}
         {!! Form::close() !!}
 
-        {!! Form::open(['url' => '/followerList']) !!}
+
+        {!! Form::open(['url' => '/remove-follower']) !!}
+        {!! Form::hidden('id',$user->id)!!}
         {!! Form::submit('フォローをはずす', ['class' => 'btn btn-primary']) !!}
         {!! Form::close() !!}
     

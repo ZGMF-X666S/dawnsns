@@ -25,6 +25,7 @@ class FollowsController extends Controller
 
         return view('follows.followList', ['follows'=>$follows, 'posts'=>$posts]);
     }
+    
     public function followerList(){
         $followers = DB::table('follows')
             ->join('users','follows.follower','=','users.id')
@@ -42,6 +43,37 @@ class FollowsController extends Controller
     return view('follows.followerList', ['followers'=>$followers, 'posts'=>$posts]);
         return view('follows.followerList');
     }
+
+    public function add(Request $request){
+        // insert
+        $user_id =$request->input('id');
+        // dd($user_id);
+        DB::table('follows')->insert([
+            'follow' =>$user_id,
+            'follower' =>Auth::id(),
+            'created_at' => now()
+        ]);
+        return back();
+    }
+
+
+
+    public function remove(Request $request){
+        // delete
+        $user_id = $request->input('id'); 
+        // dd($user_id);
+        DB::table('follows')
+            ->where('follow',$user_id)
+            ->where('follower',Auth::id())
+            ->delete();
+        return back();
+    }
+    
+
+
+    
+
+
 
 
 }

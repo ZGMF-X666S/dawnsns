@@ -44,7 +44,12 @@ Route::get('/search','UsersController@search');
 Route::get('/followList','FollowsController@followList');
 Route::get('/followerList','FollowsController@followerList');
 
-Route::post('/search/create','UsersController@search');
+Route::post('/search','UsersController@search');
+
+Route::post('/add-follow','FollowsController@add');
+Route::post('/remove-follower','FollowsController@remove');
+
+
 
 
 
