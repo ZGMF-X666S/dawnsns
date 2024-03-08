@@ -11,7 +11,6 @@ class PostsController extends Controller
     //
     public function index(){
         $posts = DB::table('posts')->get();
-        // dd($posts);
         return view('posts.index', ['posts'=>$posts]);
     }
 

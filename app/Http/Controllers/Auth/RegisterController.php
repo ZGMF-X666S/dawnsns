@@ -78,7 +78,26 @@ class RegisterController extends Controller
     public function register(Request $request){
         if($request->isMethod('post')){
             $data = $request->input();
+            $request->validate([
+                'username' => 'required|string|min:4|max:12',
+                'mail' => 'required|string|min:4|max:12|email',
+                'password' => 'required|string|min:4|max:12|confirmed',
 
+                
+            ],[
+                'username.required' => '名前は必須です',
+                'username.min' => '名前は４文字以上でお願いします。',
+                'username.max' => '名前は１２文字以内でお願いします。',
+                'mail.required' => 'メールアドレスは必須です。',
+                'mail.min' => 'メールアドレスは４文字以上です。',
+                'mail.max' => 'メールアドレスは１２文字以内です。',
+                'mail.email' => 'メールアドレスは英数字です。',
+                'password.required' => 'パスワードは必須です。',
+                'password.min' => 'パスワードは４文字以上１２文字以内でお願いします。',
+                'password.max' => 'パスワードは４文字以上１２文字以内でお願いします。',
+                'password.confirmed' => 'パスワードが一致しません。'
+
+            ]);
             $this->create($data);
             return redirect('added');
         }
@@ -88,4 +107,6 @@ class RegisterController extends Controller
     public function added(){
         return view('auth.added');
     }
+
+
 }

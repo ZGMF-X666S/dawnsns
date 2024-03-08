@@ -49,11 +49,10 @@ Route::post('/search','UsersController@search');
 Route::post('/add-follow','FollowsController@add');
 Route::post('/remove-follower','FollowsController@remove');
 
+Route::post('/profile','UsersController@profile');
+Route::post('/userupdate','UsersController@userupdate');
 
-
-
-
-
+Route::patch('/profile','UsersController@profile');
 
 
 
