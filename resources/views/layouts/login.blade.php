@@ -11,9 +11,9 @@
     <!--スマホ,タブレット対応-->
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <!--JQuery-->
-    <script src="JQueryのURL"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- publicのjs\script.jsを読み込む -->
-    <script src="JavaScriptファイルのURL"></script>
+    <script src="js/script.js"></script>
 </head>
 <body>
     <header>
@@ -37,15 +37,15 @@
         </div >
         <div id="side-bar">
             <div id="confirm">
-                <p>〇〇さんの</p>
+                <p>{{Auth::user()->username}}さんの</p>
                 <div>
                 <p>フォロー数</p>
-                <p>〇〇名</p>
+                <p>●●名</p>
                 </div>
                 <p class="btn"><a href="/followList">フォローリスト</a></p>
                 <div>
                 <p>フォロワー数</p>
-                <p>〇〇名</p>
+                <p>●●名</p>
                 </div>
                 <p class="btn"><a href="/followerList">フォロワーリスト</a></p>
             </div>
