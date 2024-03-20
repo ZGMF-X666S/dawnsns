@@ -11,9 +11,9 @@
     <!--スマホ,タブレット対応-->
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <!--JQuery-->
-    <script src="JQueryのURL"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- publicのjs\script.jsを読み込む -->
-    <script src="JavaScriptファイルのURL"></script>
+    <script src="js/script.js"></script>
 </head>
 <body>
     <header>
@@ -21,13 +21,16 @@
         <h1><a href="/top"><img src="/images/main_logo.png"></a></h1>
             <div id="">
                 <div id="">
-                    <p>{{Auth::user()->username}}さん<img src="storage/images/{{ Auth::user()->images}}" alt="{{ Auth::user()->images}}" style="width:55px;"></p>
+                    <p>{{Auth::user()->username}}さん<img src="/storage/images/{{ Auth::user()->images}}" alt="{{ Auth::user()->images}}" style="width:55px;"></p>
                 <div>
+                <p class="up">^</p>
                 <ul>
-                    <li><a href="/top">ホーム</a></li>
-                    <li><a href="/profile">プロフィール</a></li>
-                    <li><a href="/logout">ログアウト</a></li>
+                    <p class="text"><a href="/top">ホーム</a></p>
+                    <p class="text"><a href="/profile">プロフィール</a></p>
+                    <p class="text"><a href="/logout">ログアウト</a></p>
+                    
                 </ul>
+
             </div>
         </div>
     </header>
@@ -37,15 +40,15 @@
         </div >
         <div id="side-bar">
             <div id="confirm">
-                <p>〇〇さんの</p>
+                <p>{{Auth::user()->username}}さんの</p>
                 <div>
                 <p>フォロー数</p>
-                <p>〇〇名</p>
+                <p>{{ $follow_count }}名</p>
                 </div>
                 <p class="btn"><a href="/followList">フォローリスト</a></p>
                 <div>
                 <p>フォロワー数</p>
-                <p>〇〇名</p>
+                <p>{{ $follower_count }}名</p>
                 </div>
                 <p class="btn"><a href="/followerList">フォロワーリスト</a></p>
             </div>

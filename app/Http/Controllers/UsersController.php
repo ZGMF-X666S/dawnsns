@@ -138,8 +138,11 @@ class UsersController extends Controller
                 ->get();
                 // dd($users);
         } 
+        $follow_count = DB::table('follows')
+        ->where('follower',Auth::id())
+        ->count();
 
-    return view('users.search',['users'=>$users, 'keyword'=>$keyword]);
+    return view('users.search',['users'=>$users, 'keyword'=>$keyword, 'follow_count'=>$follow_count]);
 
     }
 }

@@ -20,3 +20,52 @@ header{
     flex: 0 0 19%;
     border-left: 1px solid #6C6C6C;
 }
+.modal-main{ /* ① モーダルウィンドウを非表示にする。*/
+    display: none;
+}
+
+.modal-inner { /* ② モーダル背景を画面幅いっぱいに設定し、位置を固定する。 */
+    overflow-y: scroll;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    color: #666666;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+
+.inner-content{ /* ③ モーダル内の要素全体の子要素を中央揃えにする。 */
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    max-width: 1024px;
+}
+
+.up {
+    /* padding: 21px 10px; */
+    /* width: 300px; */
+    /* font-size: 18px; */
+    background:#3C4767;
+    /* margin:auto; */
+    /* transform: scale(0.9); */
+    /* transform: scale(180); */
+    display: inline-block;     /* インラインブロック化 */
+    transform: rotate( 0deg );
+    transition: transform 0.5s;
+}
+
+.up.active{
+    transform: rotate( 180deg );
+}
+  
+.text{
+    display: none;
+}  
+
+
