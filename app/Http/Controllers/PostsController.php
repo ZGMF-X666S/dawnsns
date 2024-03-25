@@ -5,24 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
-use count;
 
 class PostsController extends Controller
 {
     //
     public function index(){
-        $posts = DB::table('posts')->get();
-        $follow_count = DB::table('follows')
-        ->where('follower',Auth::id())
-        ->count();
-
-        $follower_count = DB::table('follows')
-        ->where('follow',Auth::id())
-        ->count();
-
-
-        // dd($follow_count);
-    return view('posts.index', ['posts'=>$posts, 'follow_count'=>$follow_count ,'follower_count'=>$follower_count]);
+        $posts = DB::table('posts')
+            ->join('users','posts.user_id','=','users.id')
+            ->join('follows','follows.follow','=','users.id')
+            ->where('follows.follower','=', Auth::id())
+            ->orWhere('posts.user_id','=',Auth::id())
+            ->select('posts.created_at','posts','posts.user_id','users.username','follows.follow','images','posts.id')
+            ->get();
+        // dd($follower_count);
+    return view('posts.index', ['posts'=>$posts ]);
     }
 
     public function create(Request $request){

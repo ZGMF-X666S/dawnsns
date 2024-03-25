@@ -21,17 +21,17 @@
     <img src="/images/{{$user->images}}" alt="{{$user->images}}">
         {{ $user->username }}
         {{ $user->created_at }}
-
-        {!! Form::open(['url' => '/add-follow']) !!}
-        {!! Form::hidden('id',$user->id)!!}
-        {!! Form::submit('フォローする', ['class' => 'btn btn-primary']) !!}
-        {!! Form::close() !!}
-
-
-        {!! Form::open(['url' => '/remove-follower']) !!}
-        {!! Form::hidden('id',$user->id)!!}
-        {!! Form::submit('フォローをはずす', ['class' => 'btn btn-primary']) !!}
-        {!! Form::close() !!}
+        @if($followings->contains($user->id))
+            {!! Form::open(['url' => '/remove-follower']) !!}
+            {!! Form::hidden('id',$user->id)!!}
+            {!! Form::submit('フォローをはずす', ['class' => 'btn btn-primary']) !!}
+            {!! Form::close() !!}
+        @else
+            {!! Form::open(['url' => '/add-follow']) !!}
+            {!! Form::hidden('id',$user->id)!!}
+            {!! Form::submit('フォローする', ['class' => 'btn btn-primary']) !!}
+            {!! Form::close() !!}
+        @endif
     
     @endforeach        
     

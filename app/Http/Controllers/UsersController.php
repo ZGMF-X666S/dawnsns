@@ -20,67 +20,52 @@ class UsersController extends Controller
 
     public function userupdate(Request $request)
     {
-        //dd($request);
-            $id = $request->input();
-            $request->validate([
-                'username' => 'string|min:4|max:12',
-                'mail' => ['required',
-                Rule::unique('users')->ignore(Auth::id()),'min:4','max:30','email'],
-                'password' => 'string|min:4|max:12',
-                'bio' => 'string|max:200',
-                
-
-                
-            ],[
-                
-                'username.min' => '名前は４文字以上でお願いします。',
-                'username.max' => '名前は１２文字以内でお願いします。',
-
-                'mail.min' => 'メールアドレスは４文字以上です。',
-                'mail.max' => 'メールアドレスは１２文字以内です。',
-                'mail.email' => 'メールアドレスは英数字です。',
-
-                'password.min' => 'パスワードは４文字以上１２文字以内でお願いします。',
-                'password.max' => 'パスワードは４文字以上１２文字以内でお願いします。',
-                
-
-                'bio.max' => '200文字までです。'
-
-
-            ]);
-
-        
-        
-            
+        $user = $request->input();
         $id = $request->input('id');
-        // $up_username = $request->input('username');
-        // $up_users = $request;
-        // $up_users = [];
-        // $up_users['username'] = $request->username;
-        // $up_users['mail'] = $request->mail;
-        // dd($up_users);
-        $up_username = $request -> input('username');
-        $up_mail = $request -> input('mail');
-        // dd($up_mail);
-        $up_password = $request -> input('password');
-        $up_bio = $request -> input('bio');
         $up_image = $request -> input('images');
 
-        if(request('image')){
-            $filename=$request->file('image')->getClientOriginalName();
-            $inputs['image']=request('image')->storeAs('public/images', $filename);
+        $request->validate([
+            'username' => 'min:4|max:12',
+            'mail' => [
+            Rule::unique('users')->ignore(Auth::id()),'min:4','max:30','email'],
+            'bio' => 'max:200',
+            'images' => 'image',
+        ],[ 
+            'username.min' => '名前は４文字以上でお願いします。',
+            'username.max' => '名前は１２文字以内でお願いします。',
+            'mail.min' => 'メールアドレスは４文字以上です。',
+            'mail.max' => 'メールアドレスは１２文字以内です。',
+            'mail.email' => 'メールアドレスは英数字です。',
+            'bio.max' => '200文字までです。',
+            'images.image' => '画像ファイルを指定してください。',
+        ]);
+
+        if(request('password')){
+            $request->validate([
+                'password' =>'min:4|max:12',
+            ],[ 
+                'password.min' => 'パスワードは４文字以上１２文字以内でお願いします。',
+                'password.max' => 'パスワードは４文字以上１２文字以内でお願いします。',
+            ]);
         }
 
+        if(request('image')){
+            $filename = $request->file('image')->getClientOriginalName();
+            $inputs['image']=request('image')->storeAs('public/images', $filename);
+            DB::table('users')
+            ->where('id', $id)
+            ->update([
+            'images' => $filename
+            ]);
+        }
 
         DB::table('users')
             ->where('id', $id)
             ->update([
-            'username' => $up_username,
-            'mail' => $up_mail,
-            'password' =>bcrypt($up_password),
-            'bio' => $up_bio,
-            'images' => $request->file('image')->getClientOriginalName()
-            
+            'username' => $user['username'],
+            'mail' => $user['mail'],
+            'password' =>bcrypt($user['password']),
+            'bio' => $user['bio'],            
             ]);
             
         return redirect('/profile');
@@ -90,11 +75,12 @@ class UsersController extends Controller
         if($request->isMethod('post')){
             $id = $request->input();
             $request->validate([
-                'username' => 'string|min:4|max:12',
-                'mail' => ['required',
+                'username' => 'min:4|max:12',
+                'mail' => [
                 Rule::unique('users')->ignore($id->Auth::id()),'min:4','max:30','email'],
-                'password' => 'string|min:4|max:12|confirmed',
-                'bio' => 'string|max200',
+                'password' => 'min:4|max:12|confirmed',
+                'bio' => 'max:200',
+                'images' => 'image',
 
                 
             ],[
@@ -108,7 +94,11 @@ class UsersController extends Controller
 
                 'password.min' => 'パスワードは４文字以上１２文字以内でお願いします。',
                 'password.max' => 'パスワードは４文字以上１２文字以内でお願いします。',
-                'password.confirmed' => 'パスワードが一致しません。'
+                'password.confirmed' => 'パスワードが一致しません。',
+
+                'bio.max' => 'プロフィールは２００文字以内です。',
+
+                'images' => '画像ファイルは、jpeg,png,bmp,gif,svgファイルのみ使用できます。',
 
             ]);
             $this->create($id);
@@ -138,11 +128,28 @@ class UsersController extends Controller
                 ->get();
                 // dd($users);
         } 
-        $follow_count = DB::table('follows')
+        $followings = DB::table('follows')
         ->where('follower',Auth::id())
-        ->count();
+        ->pluck('follow');
+        
 
-    return view('users.search',['users'=>$users, 'keyword'=>$keyword, 'follow_count'=>$follow_count]);
+    return view('users.search',['users'=>$users, 'keyword'=>$keyword, 'followings'=>$followings]);
 
     }
+
+    public function otherProfile(Request $request){
+        $user = DB::table('Users')
+        ->where('id',$request->input('id'))
+        ->first();       
+        $followings = DB::table('follows')
+        ->where('follower',Auth::id())
+        ->pluck('follow');
+        $posts = DB::table('posts')
+        ->join('users','posts.user_id','=','users.id')
+            ->where('posts.user_id','=', $request->input('id'))
+            ->select('posts.created_at','posts','posts.user_id','users.username','images','posts.id')
+            ->get();
+        return view('users.otherProfile',['user'=>$user,'followings'=>$followings,'posts'=>$posts]);
+    }
+
 }

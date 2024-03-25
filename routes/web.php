@@ -54,6 +54,10 @@ Route::post('/userupdate','UsersController@userupdate');
 
 Route::patch('/profile','UsersController@profile');
 
+Route::post('/otherProfile','UsersController@otherProfile');
+
+
+
 
 
 

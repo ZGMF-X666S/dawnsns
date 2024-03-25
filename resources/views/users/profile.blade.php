@@ -15,7 +15,7 @@
             <li>{{$errors->first('mail')}}</li>
         @endif
         {{ Form::label('メールアドレス') }}
-        {{ Form::email('mail', null, ['class' => 'form-control','id' => 'inputEmail','placeholder' => 'Eメール'])}}
+        {{ Form::email('mail', $users->mail, ['class' => 'form-control','id' => 'inputEmail','placeholder' => 'Eメール'])}}
     </div>
     <div>
         

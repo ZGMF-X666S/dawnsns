@@ -4,10 +4,12 @@
 
 
     @foreach ($follows as $follow)   
-    
-        <img src="/images/{{$follow->images}}">
-    
-        
+    {!! Form::open(['url' => '/otherProfile']) !!}
+                            <div class="form-group">
+                                {!! Form::hidden('id', $follow->id) !!}
+                            </div>
+                            <input type="image" class="btn btn-primary pull-right" src="/images/{{$follow->images}}">                        
+    {!! Form::close() !!}    
     @endforeach
     
 
