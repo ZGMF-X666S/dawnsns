@@ -10,7 +10,6 @@ use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
-    //
     public function profile(Request $request){
         $users = DB::table('Users')
         ->where('id',Auth::id())
@@ -67,7 +66,7 @@ class UsersController extends Controller
             'password' =>bcrypt($user['password']),
             'bio' => $user['bio'],            
             ]);
-            
+   
         return redirect('/profile');
     }
 
@@ -77,29 +76,22 @@ class UsersController extends Controller
             $request->validate([
                 'username' => 'min:4|max:12',
                 'mail' => [
-                Rule::unique('users')->ignore($id->Auth::id()),'min:4','max:30','email'],
+                    Rule::unique('users')->ignore($id->Auth::id()),'min:4','max:30','email'
+                ],
                 'password' => 'min:4|max:12|confirmed',
                 'bio' => 'max:200',
-                'images' => 'image',
-
-                
+                'images' => 'image',                
             ],[
-                
                 'username.min' => '名前は４文字以上でお願いします。',
                 'username.max' => '名前は１２文字以内でお願いします。',
-
                 'mail.min' => 'メールアドレスは４文字以上です。',
                 'mail.max' => 'メールアドレスは１２文字以内です。',
                 'mail.email' => 'メールアドレスは英数字です。',
-
                 'password.min' => 'パスワードは４文字以上１２文字以内でお願いします。',
                 'password.max' => 'パスワードは４文字以上１２文字以内でお願いします。',
                 'password.confirmed' => 'パスワードが一致しません。',
-
                 'bio.max' => 'プロフィールは２００文字以内です。',
-
                 'images' => '画像ファイルは、jpeg,png,bmp,gif,svgファイルのみ使用できます。',
-
             ]);
             $this->create($id);
             return redirect('added');
@@ -107,49 +99,37 @@ class UsersController extends Controller
         return view('users.profile');
     }
 
-
-
-
-
     public function search(Request $request){
         $keyword = $request->input('newSearch');
-        // dd($keyword);
         if(isset($keyword)){
             $users = DB::table('users')
                 ->where('username', 'LIKE', "%".$keyword."%")
                 ->where('id','!=',Auth::id())
-               // ->select('images',)
                 ->get();
-                // dd($users);
         }else{
             $users = DB::table('users')
                 ->where('id','!=',Auth::id())
-                // ->select('images',)
                 ->get();
-                // dd($users);
         } 
         $followings = DB::table('follows')
         ->where('follower',Auth::id())
         ->pluck('follow');
         
-
     return view('users.search',['users'=>$users, 'keyword'=>$keyword, 'followings'=>$followings]);
-
     }
 
     public function otherProfile(Request $request){
         $user = DB::table('Users')
-        ->where('id',$request->input('id'))
-        ->first();       
+            ->where('id',$request->input('id'))
+            ->first();       
         $followings = DB::table('follows')
-        ->where('follower',Auth::id())
-        ->pluck('follow');
+            ->where('follower',Auth::id())
+            ->pluck('follow');
         $posts = DB::table('posts')
-        ->join('users','posts.user_id','=','users.id')
+            ->join('users','posts.user_id','=','users.id')
             ->where('posts.user_id','=', $request->input('id'))
             ->select('posts.created_at','posts','posts.user_id','users.username','images','posts.id')
             ->get();
         return view('users.otherProfile',['user'=>$user,'followings'=>$followings,'posts'=>$posts]);
     }
-
 }

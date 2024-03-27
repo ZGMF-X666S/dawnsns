@@ -17,8 +17,7 @@ class PostsController extends Controller
             ->orWhere('posts.user_id','=',Auth::id())
             ->select('posts.created_at','posts','posts.user_id','users.username','follows.follow','images','posts.id')
             ->get();
-        // dd($follower_count);
-    return view('posts.index', ['posts'=>$posts ]);
+        return view('posts.index', ['posts'=>$posts ]);
     }
 
     public function create(Request $request){
@@ -42,7 +41,6 @@ class PostsController extends Controller
         return redirect('/top');
     }
 
-
     public function update(Request $request)
     {
         $id = $request->input('id');
@@ -52,7 +50,7 @@ class PostsController extends Controller
             ->update(
                 ['posts' => $up_post]
             );
-            
+        
         return redirect('/top');
     }
 }
