@@ -4,7 +4,7 @@
 <h2>機能を実装していきましょう。</h2>
 
 {!! Form::open(['url' => 'post/create']) !!}
-    <div class="form-group">     
+    <div class="form-group">
         {!! Form::input('text', 'newPost', null,['maxlength'=>'150', 'required', 'placeholder' => '投稿内容']) !!}
         <button type="submit"><img src="images/post.png" alt="edit.png"></button>
     </div>
