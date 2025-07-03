@@ -55,7 +55,6 @@
             <p class="btn"><a href="/search">ユーザー検索</a></p>
         </div>
     </div>
-    <footer>
-    </footer>
+    @include('layouts.footer')
 </body>
 </html>
