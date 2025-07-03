@@ -57,9 +57,6 @@ Route::patch('/profile','UsersController@profile');
 Route::post('/otherProfile','UsersController@otherProfile');
 
 
+Route::post('/tenkyouken','GundamController@tenkyouken');
 
-
-
-
-
-
+Route::delete('/moviebullet','GundamController@moviebullet');

@@ -21,7 +21,7 @@ class FollowsController extends Controller
             ->get();
         return view('follows.followList', ['follows'=>$follows, 'posts'=>$posts]);
     }
-    
+
     public function followerList(){
         $followers = DB::table('follows')
             ->join('users','follows.follower','=','users.id')
@@ -32,7 +32,7 @@ class FollowsController extends Controller
             ->join('follows','follows.follower','=','users.id')
             ->where('follows.follow','=', Auth::id())
             ->select('posts.created_at','posts','posts.user_id','users.username','follows.follower','images')
-            ->get();      
+            ->get();
         return view('follows.followerList', ['followers'=>$followers, 'posts'=>$posts]);
     }
 

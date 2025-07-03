@@ -16,6 +16,8 @@
 
     <div>
         {{ $post->id }}
+        <!-- {{ $post->images }} -->
+        <img src="{{ asset('storage/images/' . $post->images) }}" alt="表示できません" style="max-width: 20px; height: auto;">
         {{ $post->posts }}
         {{ $post->created_at }}
 
@@ -23,13 +25,13 @@
         <div class="modal-main js-modal" id="modal01">
             <div class="modal-inner">
                 <div class="inner-content">
-                    <div class ="textbox vallue">       
+                    <div class ="textbox vallue">
                         {!! Form::open(['url' => '/post/update']) !!}
                             <div class="form-group">
                                 {!! Form::hidden('id', $post->id) !!}
                                 {!! Form::input('text', 'upPost', $post->posts, ['required', 'class' => 'form-control']) !!}
                             </div>
-                            <button type="submit" class="btn btn-primary pull-right"><img src="images/edit.png" alt="edit.png"></button>    
+                            <button type="submit" class="btn btn-primary pull-right"><img src="images/edit.png" alt="edit.png" style="max-width: 20px; height: auto;"></button>    
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -37,7 +39,7 @@
         </div>
         <div class="modalopen" data-target="modal01">
             <div class = "btn btn-primary pull-right">
-                <img src="images/edit.png" alt="edit.png">          
+                <img src="images/edit.png" alt="edit.png">
             </div>
         </div>
         <div>

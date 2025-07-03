@@ -18,7 +18,6 @@
         {{ Form::email('mail', $users->mail, ['class' => 'form-control','id' => 'inputEmail','placeholder' => 'Eメール'])}}
     </div>
     <div>
-        
         {{ Form::label('現在のパスワード') }}
         {{ Form::input('text','','●●●●●●●', ['class' => 'form-control','id' => 'inputPassword','placeholder' => 'パスワード'])}}
     </div>
@@ -39,15 +38,12 @@
     </div>
     <div>
         {{ Form::label('画像') }}
-        
         <input id="image" type="file" name="image">
-        
     </div>
-       
 
     <button type="submit" class="btn btn-success pull-right">更新</button>
 
-{!! Form::close() !!} 
+{!! Form::close() !!}
 
 
 

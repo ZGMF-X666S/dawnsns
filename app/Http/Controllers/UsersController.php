@@ -13,7 +13,7 @@ class UsersController extends Controller
     public function profile(Request $request){
         $users = DB::table('Users')
         ->where('id',Auth::id())
-        ->first();       
+        ->first();
         return view('users.profile',['users'=>$users]);
     }
 
@@ -29,7 +29,7 @@ class UsersController extends Controller
             Rule::unique('users')->ignore(Auth::id()),'min:4','max:30','email'],
             'bio' => 'max:200',
             'images' => 'image',
-        ],[ 
+        ],[
             'username.min' => '名前は４文字以上でお願いします。',
             'username.max' => '名前は１２文字以内でお願いします。',
             'mail.min' => 'メールアドレスは４文字以上です。',
@@ -64,7 +64,7 @@ class UsersController extends Controller
             'username' => $user['username'],
             'mail' => $user['mail'],
             'password' =>bcrypt($user['password']),
-            'bio' => $user['bio'],            
+            'bio' => $user['bio'],
             ]);
    
         return redirect('/profile');
@@ -80,7 +80,7 @@ class UsersController extends Controller
                 ],
                 'password' => 'min:4|max:12|confirmed',
                 'bio' => 'max:200',
-                'images' => 'image',                
+                'images' => 'image',
             ],[
                 'username.min' => '名前は４文字以上でお願いします。',
                 'username.max' => '名前は１２文字以内でお願いします。',
@@ -110,18 +110,17 @@ class UsersController extends Controller
             $users = DB::table('users')
                 ->where('id','!=',Auth::id())
                 ->get();
-        } 
+        }
         $followings = DB::table('follows')
         ->where('follower',Auth::id())
         ->pluck('follow');
-        
     return view('users.search',['users'=>$users, 'keyword'=>$keyword, 'followings'=>$followings]);
     }
 
     public function otherProfile(Request $request){
         $user = DB::table('Users')
             ->where('id',$request->input('id'))
-            ->first();       
+            ->first();
         $followings = DB::table('follows')
             ->where('follower',Auth::id())
             ->pluck('follow');

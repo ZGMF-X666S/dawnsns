@@ -50,7 +50,7 @@ class PostsController extends Controller
             ->update(
                 ['posts' => $up_post]
             );
-        
         return redirect('/top');
     }
+
 }
