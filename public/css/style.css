@@ -1,5 +1,6 @@
 @charset "utf-8";
 html{
+
 }
 body{
     position: relative;
@@ -7,19 +8,39 @@ body{
 /* header */
 header{
     background:#3C4767;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 225px;
+    z-index: 1000;
+}
+
+.scroll-bar{
+    overflow-y: auto;
+    height: calc(100% - 1px);
 }
 
 /* main content */
 #row{
     display: flex;
     flex-flow: row wrap;
+    margin-top: 225px;
 }
 #container{
-    flex: 0 0 80%;
+    flex: 0 0 78.5%;
 }
-#side-bar{
-    flex: 0 0 19%;
-    border-left: 1px solid #6C6C6C;
+
+
+#side-bar {
+    position: fixed;
+    top: 225px; /* header + nav の高さ */
+    right: 0;
+    width: 250px; /* 必要に応じて調整 */
+    height: calc(100% - 225px - 87px); /* ヘッダー・ナビ分を引いた高さ */
+    background-color: #ffffff;
+    overflow-y: auto; /* サイドバー自体にスクロールが必要なら */
+    padding: 10px;
+
 }
 .js-modal {
     background-color: rgba(10, 10, 10, 0.4);

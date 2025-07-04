@@ -28,7 +28,6 @@
                     <p class="text"><a href="/top">ホーム</a></p>
                     <p class="text"><a href="/profile">プロフィール</a></p>
                     <p class="text"><a href="/logout">ログアウト</a></p>
-                    
                 </ul>
 
             </div>
@@ -36,7 +35,9 @@
     </header>
     <div id="row">
         <div id="container">
+            <div class="scroll-bar">
             @yield('content')
+            </div>
         </div >
         <div id="side-bar">
             <div id="confirm">
